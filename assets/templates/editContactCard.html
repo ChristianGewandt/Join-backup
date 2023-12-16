@@ -1,9 +1,10 @@
-<form id="editContactOverlay" onsubmit="editContact(); return false" novalidate>
-    <img class="closeOverlay" onclick="closeOverlay()" src="assets/img/black-x.svg" alt="">
+<div class="editContactOverlay" >
+    <form onsubmit="editContact(); return false" novalidate>
+    <img class="closeOverlay" onclick="closeContactCard('editContactOverlay')" src="./assets/img/black-x.svg" alt="">
     <div class="addContactOverlayLeft">
         <span class="addContactOverlayTitle">Edit contact</span>
-        <img src="assets/img/OverlaySeperator.svg" alt="">
-        <img class="addContactOverlayLogo" src="assets/img/logo_invert.svg" alt="">
+        <img src="./assets/img/OverlaySeperator.svg" alt="">
+        <img class="addContactOverlayLogo" src="./assets/img/logo_invert.svg" alt="">
     </div>
     <div id="editContactAvartar" class="editContactAvartar"><span class="editContactAvartarInitials" id="editContactAvartarInitials"></span></div>
     <div class="addContactOverlayContent">
@@ -12,7 +13,7 @@
                 <div class="inputFieldWithImg">
                     <input class="loginInput" type="text" id="editContactName" placeholder="Name" aria-required="true"
                         required>
-                    <img src="assets/img/userIcon.svg" alt="">
+                    <img src="./assets/img/userIcon.svg" alt="">
                 </div>
                 <span id="editContactNameError" class="addContactErrorMessage d-none">This field is required</span>
             </div>
@@ -22,7 +23,7 @@
                 <div class="inputFieldWithImg">
                     <input class="loginInput" type="email" id="editContactEmail" placeholder="Email" aria-required="true"
                         required>
-                    <img src="assets/img/loginMail.svg" alt="">
+                    <img src="./assets/img/loginMail.svg" alt="">
                 </div>
                 <span id="editContactEmailError" class="addContactErrorMessage d-none">This field is required</span>
                 <span id="editContactEmailFormatError" class="addContactErrorMessage d-none">Please insert a valid
@@ -34,12 +35,14 @@
                 <div class="inputFieldWithImg">
                     <input id="editContactPhone" class="loginInput" type="number" placeholder="Phone"
                         aria-required="true" required>
-                    <img src="assets/img/phone.svg" alt="">
+                    <img src="./assets/img/phone.svg" alt="">
                 </div>
             </div>
         </div>
     </div>
-    <div class="addContactButtons">
+    <div id="addContactButtons" class="addContactButtons">
+        <button type="button" class="editContactOverlayDelteButton"><span>Delete</span></button>
         <button type="submit" class="editContactOverlaySaveButton"><span>Save</span></button>
     </div>
     </form>
+</div>

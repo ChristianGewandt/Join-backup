@@ -1,3 +1,4 @@
+let idCounter = 0;
 let title;
 let description;
 let category = [];
@@ -7,11 +8,11 @@ let prio;
 let tasksJsonArrays = []
 let addTaskSelectPrios = [];
 let addTaskNewSubtasks = [];
-// let addTaskNewContacts = [];
-// let addTaskNewCategorys = [];
 let buttonBackgroundColor = ['#800080', '#ff0000', '#008000', '#ffba00', '#ffc0cb', '#0000ff'];
 let selectedCategory;
 let selectedColor;
+
+
 
 function openNewTaskCategroy(n) {
   document.getElementById(`select-container${n}`).innerHTML = `
@@ -44,6 +45,10 @@ function prioColor(color, n) {
       document.getElementById(`prio-low-icon${n}`).src = 'assets/img/prio-low-icon.svg';
       document.getElementById(`prio-yellow${n}`).classList.remove('prio-yellow');
       document.getElementById(`prio-green${n}`).classList.remove('prio-green');
+      document.getElementById(`prio-medium-icon${n}`).classList.remove("d-none");
+      document.getElementById(`prio-medium-white-icon${n}`).classList.add("d-none");
+      document.getElementById(`prio-low-icon${n}`).classList.remove("d-none");
+      document.getElementById(`prio-low-white-icon${n}`).classList.add("d-none");
       deleteJasonPrio()
     }
   } else if (color == 'prio-yellow') {
@@ -58,6 +63,10 @@ function prioColor(color, n) {
       document.getElementById(`prio-low-icon${n}`).src = './assets/img/prio-low-icon.svg';
       document.getElementById(`prio-red${n}`).classList.remove('prio-red');
       document.getElementById(`prio-green${n}`).classList.remove('prio-green');
+      document.getElementById(`prio-urgent-icon${n}`).classList.remove("d-none");
+      document.getElementById(`prio-urgent-white-icon${n}`).classList.add("d-none");
+      document.getElementById(`prio-low-icon${n}`).classList.remove("d-none");
+      document.getElementById(`prio-low-white-icon${n}`).classList.add("d-none");
       deleteJasonPrio();
     }
   } else if (color == 'prio-green') {
@@ -72,10 +81,14 @@ function prioColor(color, n) {
       document.getElementById(`prio-medium-icon${n}`).src = './assets/img/prio-medium-icon.svg';
       document.getElementById(`prio-red${n}`).classList.remove('prio-red');
       document.getElementById(`prio-yellow${n}`).classList.remove('prio-yellow');
+      document.getElementById(`prio-urgent-icon${n}`).classList.remove('d-none');
+      document.getElementById(`prio-urgent-white-icon${n}`).classList.add("d-none");
+      document.getElementById(`prio-medium-icon${n}`).classList.remove("d-none");
+      document.getElementById(`prio-medium-white-icon${n}`).classList.add("d-none");
+        
       deleteJasonPrio();
     }
   }
-  // selectPrio(name, colorNumber, colorIcon, whiteIcon);
 }
 
 function closeSelectContactEmail(n) {
@@ -88,50 +101,56 @@ function deleteSelectedContacts() {
 }
 
 function flyIngButton(n){
-  let flyInButton = document.getElementById(`fly-in-button${n}`);
-      flyInButton.classList.remove('d-none');
-
-  // setTimeout(() => {
-  //   flyInButton.classList.add('d-none');
-  // }, 1000);
+  let taskAddedToBoardButton = document.getElementById(`fly-in-button${n}`);
+      taskAddedToBoardButton.classList.remove("d-none");
 }
 
 function closeFlyIngButton(n) {
-  let flyInButton = document.getElementById(`fly-in-button${n}`);
-  flyInButton.classList.add('d-none');
+  let taskAddedToBoardButton = document.getElementById(`fly-in-button${n}`);
+  taskAddedToBoardButton.classList.add("d-none");
+  taskAddedToBoardButton.classList.add("fly-in");
 }
 
  function goToBoardPage(n) {
   let meinButton = document.getElementById('board');
-  let flyInButton = document.getElementById(`fly-in-button${n}`);
+  //let flyInButton = document.getElementById(`fly-in-button${n}`);
   let addTaskContainer = document.getElementById('content-add-task-container');
-  let addTaskWindowOverlayContainer = document.getElementById('container-opened-task');
+  //let addTaskWindowOverlayContainer = document.getElementById('container-opened-task');
   let addTaskWindowContainer = document.getElementById('add-task-window');
-   let taskaddedtoboardButton = document.getElementById('fly-in-button1'); 
+  let taskAddedToBoardButton = document.getElementById(`fly-in-button${n}`);
+  let backgroundOverlay = document.getElementById("backgroundOverlay");
    
    setTimeout(function () {
     
      meinButton.click();
-     addTaskWindowOverlayContainer.classList.remove('fade-in-left');
-     addTaskContainer.classList.remove('fade-out-right');
-     addTaskContainer.classList.add('fade-out-right');
+     
+     //addTaskWindowOverlayContainer.classList.remove('fade-in-left');
+    //  addTaskContainer.classList.remove('fade-out-right');
+    //  addTaskContainer.classList.add('fade-out-right');
      addTaskWindowContainer.classList.remove('fade-in-left');
      addTaskWindowContainer.classList.add('fade-out-right');
-     addTaskWindowOverlayContainer.classList.add('fade-out-right');
+     
+     //addTaskWindowOverlayContainer.classList.add('fade-out-right');
 
    }, 3000);
 
    setTimeout(function () {
-    
-     addTaskContainer.classList.add('fade-out-right');
-     taskaddedtoboardButton.classList.add('fade-out-right');
-     
+    addTaskContainer.classList.add("fade-out-right");
+    backgroundOverlay.classList.remove("fade-out-right");
+    backgroundOverlay.classList.add("fade-out-right");
+    addTaskWindowContainer.classList.remove("fade-in-left");
+    addTaskWindowContainer.classList.add("fade-out-right");
+    taskAddedToBoardButton.classList.remove("fly-in");
+    taskAddedToBoardButton.classList.add("fade-out-right");
    }, 2000);
 
    setTimeout(function () {
      
-     addTaskContainer.classList.remove('fade-out-right');
-     taskaddedtoboardButton.classList.remove('fade-out-right');
+     
+     taskAddedToBoardButton.classList.remove("fade-out-right");
+     addTaskWindowContainer.classList.add("d-none");
+     addTaskContainer.classList.remove("fade-out-right");
+     closeFlyIngButton(n);
 
    }, 3000);
 
@@ -144,6 +163,7 @@ function closeFlyIngButton(n) {
 
 async function createTaskButton(n) {
   // inputMandatoryFieldsCheck(n)
+  idCount()
   headtitle(n);
   descriptionText(n);
   selectionDueDate(n);
@@ -152,8 +172,12 @@ async function createTaskButton(n) {
   await init();
   renderSelectOpenTaskCategory(n);
   deleteSelectedContacts();
-  flyIngButton(n)
-  goToBoardPage(n)
+  closeContacts(n);
+  flyIngButton(n);
+  goToBoardPage(n);
+  renderBoard();
+  tasksInBoard();
+  numberOfTasks();
  
   
 }
@@ -162,7 +186,9 @@ function clearTheInputFields(n) {
   deleteAddTaskFields(n)
   renderSelectOpenTaskCategory(n);
   deleteSelectedContacts();
-  deleteRedBorderAndRequiredText(n)
+  deleteRedBorderAndRequiredText(n);
+  closeContacts(n);
+  closeSelectContactsToAssign(n);
 }
 
 /**
@@ -173,14 +199,23 @@ function deleteAddTaskFields(n) {
   document.getElementById(`task-title-input${n}`).value = '';
   document.getElementById(`add-task-description${n}`).value = '';
   document.getElementById(`due-date${n}`).value = '';
+  if(n == 0 || n == 1) {
   document.getElementById(`add-task-subtask-point${n}`).innerHTML = '';
+  }
   /* Prio button initial situation (Prio Button in Ausgangssituation setzen)  */
   document.getElementById(`prio-red${n}`).classList.remove('prio-red');
+  document.getElementById(`prio-urgent-icon${n}`).classList.remove("d-none");
+  document.getElementById(`prio-urgent-white-icon${n}`).classList.add("d-none");
   document.getElementById(`prio-urgent-icon${n}`).src = './assets/img/prio-urgent-icon.svg';
   document.getElementById(`prio-yellow${n}`).classList.remove('prio-yellow');
+  document.getElementById(`prio-medium-icon${n}`).classList.remove("d-none");
+  document.getElementById(`prio-medium-white-icon${n}`).classList.add("d-none");
   document.getElementById(`prio-medium-icon${n}`).src = './assets/img/prio-medium-icon.svg';
   document.getElementById(`prio-green${n}`).classList.remove('prio-green');
+  document.getElementById(`prio-low-icon${n}`).classList.remove("d-none");
+  document.getElementById(`prio-low-white-icon${n}`).classList.add("d-none");
   document.getElementById(`prio-low-icon${n}`).src = './assets/img/prio-low-icon.svg';
+  addTaskNewSubtasks.splice(length)
 }
 
 /**
@@ -230,17 +265,16 @@ async function deleteCategory(i, n) {
 }
 
 async function addTaskCategory(n) {
-  // closeNewTaskCategroy(n);
   let content = document.getElementById(`select-container${n}`);
   renderSelectCloseTaskCategory(n, content)
 
   for (let i = 0; i < categorys.length; i++) {
     const category = categorys[i];
-    content.innerHTML +=/*html*/`
-    <div class="option" onclick="selectCategory(${i}, ${n}); checkMandatoryFieldCategory(${n});">
+    content.innerHTML += /*html*/ `
+    <div class="option choose" onclick="selectCategory(${i}, ${n}); checkMandatoryFieldCategory(${n})">
       <div class="selection-point-container">
-        <div>${category['categorytext']}</div>
-        <div class="color" style="background-color: ${category['categoryColor']}"></div>
+        <div>${category["categorytext"]}</div>
+        <div class="color" style="background-color: ${category["categoryColor"]}"></div>
       </div>
       <div class="color-and-delete-icon-container">
         <img onclick="deleteCategory(${i}, ${n})" class="delete-icon" src = "./assets/img/delete.png" alt = "" >
@@ -277,32 +311,34 @@ function closeNewTaskCategroy(n) {
 
 function renderSelectOpenTaskCategory(n) {
   document.getElementById(`select-container${n}`).innerHTML = ``;
-  document.getElementById(`select-container${n}`).innerHTML = `<div onclick="openNewTaskCategroy(${n}); checkMandatoryFieldCategory(${n});" class="option selectTask">
+  document.getElementById(
+    `select-container${n}`,
+  ).innerHTML = `<div onclick="openNewTaskCategroy(${n}); " class="option selectTask${n}"> <!-- checkMandatoryFieldCategory(${n}); -->
     <div id="select-open-task-category${n}">Select task category</div>
     <img  class="arrow-icon" src="./assets/img/arrow_icon.svg" alt="">
   </div>
   <div id="content-categroy-container${n}" class="d-none">
-    <div onclick="openNewCategroy('new-category-container${n}', 'color-container${n}', 'select-container${n}', ${n})" class="option">New Category</div>
+    <div onclick="openNewCategroy('new-category-container${n}', 'color-container${n}', 'select-container${n}', ${n})" class="option ">New Category</div>
   </div>`;
 }
 function renderSelectCloseTaskCategory(n, content) {
   content.innerHTML = '';
-  content.innerHTML = `<div class="option selectTask" onclick="closeNewTaskCategroy(${n}); checkMandatoryFieldCategory(${n}); ">
+  content.innerHTML = `<div class="option selectTask" onclick="closeNewTaskCategroy(${n}); checkMandatoryFieldCategory(${n})">
     <div id="select-close-task-category${n}">Select task category</div>
     <img  class="arrow-icon" src="./assets/img/arrow_top_icon.svg" alt="">
   </div>
   <div id="content-categroy-container${n}">
-    <div onclick="openNewCategroy('new-category-container${n}', 'color-container${n}', 'select-container${n}', ${n})" class="option">New Category</div>
+    <div onclick="openNewCategroy('new-category-container${n}', 'color-container${n}', 'select-container${n}', ${n})" class="option choose">New Category</div>
   </div>`;
 }
 
 function selectCategory(i, n) {
   let category = categorys[i];
-  document.getElementById(`select-container${n}`).innerHTML =/*html*/`
-  <div onclick="openNewTaskCategroy(${n}); checkMandatoryFieldCategory(${n});" class="option">
+  document.getElementById(`select-container${n}`).innerHTML = /*html*/ `
+  <div onclick="openNewTaskCategroy(${n}); checkMandatoryFieldCategory(${n});" class="option"> 
                 <div class="selection-point-container">
-                  <div>${category['categorytext']}</div>
-                  <div id="color-button-container${n}"><div class="color-category-button" style="background-color :${category['categoryColor']};">  
+                  <div>${category["categorytext"]}</div>
+                  <div id="color-button-container${n}"><div class="color-category-button" style="background-color :${category["categoryColor"]};">  
                   </div></div>
                 </div>
                 <img class="arrow-icon" src="./assets/img/arrow_icon.svg" alt="">
@@ -355,46 +391,40 @@ function closeSelectContactsToAssign(n) {
   document.getElementById(`assigned-to-container${n}`).classList.add('d-none');
   document.getElementById(`select-contacts-container${n}`).classList.remove('d-none');
   document.getElementById(`assigned-to-container${n}`).style.border = '';
-  document.getElementById(`required-assigned-to${n}`).classList.add('hidden')
-
-  // document.getElementById(`invite-new-contact-container${n}`).classList.add('d-none');
-  // document.getElementById(`select-contacts-container${n}`).innerHTML = `
-  // <div onclick="openSelectContactsToAssign(${n}); checkMandatoryFieldAssignedTo(${n});" class="option selectTaskAssignedTo">
-  //   <div>Select contacts to assign</div>
-  //   <img class="arrow-icon" src="assets/img/arrow_icon.svg" alt="">
-  // </div>
-  // `;
+  document.getElementById(`required-assigned-to${n}`).classList.add('d-none');
+  document.getElementById(`required-assigned-to-contact-email${n}`).classList.add('d-none');
 }
 
- function openAndCloseContacts(n) {
+function closeContacts(n) {
+  document.getElementById(`contacts${n}`).classList.remove("display-flex");
+  document.getElementById(`arrow-rotate`).classList.remove("arrow-rotate");
+}
+
+ function openAndCloseContacts(n, i) {
   document.getElementById(`contacts${n}`).classList.toggle('display-flex');
   document.getElementById(`arrow-rotate`).classList.toggle('arrow-rotate');
   deleteAddTaskContacts()
   loadNewContactsInAddTaskContacts()
   loadContactsInAddTaskContacts()
-  renderAddTaskContacts(n);
+  renderAddTaskContacts(n, i);
   checkboxChecked(n)
   getSelectedOptionsContacts(n)
 }
 
+
+
+
 function getSelectedOptionsContacts(n) {
-  let checkboxes = document.getElementsByName("option[]");
-  // toggleCheckboxes()
-  // for (let i = 0; i <(selectedContacts.length); i++) {
-  //   let contactName = selectedContacts[i]['name']
-  //   if (selectedContacts[i]['name'].includes(contactName) === true) {
-  //     document.getElementById(`${selectedContacts[i]['name'] + n}`).checked = true ;
-  //   }  
-  // }
+  let checkboxes = document.getElementsByName(`option[${n}]`);
   console.log(selectedContacts);
   
   for (let i = 0; i < checkboxes.length; i++) {
     if (checkboxes[i].checked) {
-      if (addTaskContacts[i]['name'] && !selectedContacts.some(contact => contact.name === addTaskContacts[i]['name'])) {
+      if (addTaskContacts[i]['name'] && !selectedContacts.some(contacts => contacts.name === addTaskContacts[i]['name'])) {
         selectedContacts.push(addTaskContacts[i]);
       }
     } else {
-      let index = selectedContacts.findIndex(contact => contact.name === addTaskContacts[i].name);
+      let index = selectedContacts.findIndex(contacts => contacts.name === addTaskContacts[i].name);
       if (index !== -1) {
         selectedContacts.splice(index, 1);
       }
@@ -413,38 +443,95 @@ function checkboxChecked(n) {
 
 function checkNewContactField(n) {
   let NewContactField = document.getElementById(`invite-new-contact${n}`);
-  if (NewContactField.value === '') {
-    document.getElementById(`assigned-to-container${n}`).style.border = '2px solid red';
-    document.getElementById(`required-assigned-to${n}`).classList.remove('hidden');
+  if (NewContactField.value.indexOf("@") === -1) {
+    document.getElementById(`required-assigned-to${n}`).classList.add("d-none");
+    document.getElementById(`required-assigned-to-contact-email${n}`).classList.remove("d-none");
+    document.getElementById(`assigned-to-container${n}`).style.border ="2px solid red";
+    if (NewContactField.value === "") {
+      document.getElementById(`required-assigned-to-contact-email${n}`).classList.add("d-none");
+      document.getElementById(`required-assigned-to${n}`).classList.remove("d-none");
+    } 
+    
   } else {
-    document.getElementById(`assigned-to-container${n}`).style.border = '';
-    document.getElementById(`required-assigned-to${n}`).classList.add('hidden')
-    invitenNewContact(n)
+    document.getElementById(`assigned-to-container${n}`).style.border = "";
+    document.getElementById(`required-assigned-to${n}`).classList.add("d-none");
+    document.getElementById(`required-assigned-to-contact-email${n}`).classList.add("d-none");
+    invitenNewContact(n);
   }
 }
 
-async function renderAddTaskContacts(n) {
+
+  async function isEmailAvailableByAddTaskContact(n) {
+    let NewContactField = document.getElementById(`invite-new-contact${n}`);
+
+  let emailToCheck = NewContactField.value;
+
+  let isEmailExists = contacts.some((contact) => contact.email.toLowerCase() === emailToCheck.toLowerCase());
+
+  if (!isEmailExists) {
+
+    checkNewContactField(n)
+
+  } else {
+    document.getElementById(`required-assigned-to${n}`).classList.add("d-none");
+    document.getElementById(`required-assigned-to-contact-email${n}`).classList.remove("d-none");
+    document.getElementById(`assigned-to-container${n}`).style.border = "2px solid red";
+  }
+  
+
+  }
+
+async function renderAddTaskContacts(n, i) {
 
   let content = document.getElementById(`contacts${n}`);
   content.innerHTML ='';
-  // renderSelectCloseTaskCategory(n, content)
   content.innerHTML = `
-  <div id="invite-new-contact-container${n}" onclick="inviteNewContact(${n})" class="option">
+  <div id="invite-new-contact-container${n}" onclick="inviteNewContact(${n})" class="option assigned-to-choose">
     <div>Invite new contact</div>
-    <img class="contact-icon" src="assets/img/contact_icon.svg" alt="">
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="25px" height="25px" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-1422.42,-1908.22)">
+        <g id="perm_contact_calendar_FILL0_wght400_GRAD0_opsz48.svg" transform="matrix(4.16667,0,0,4.16667,1522.42,2008.22)">
+            <g transform="matrix(1,0,0,1,-24,-24)">
+                <path d="M24,36c-2.2,0 -4.3,0.358 -6.3,1.075c-2,0.717 -3.9,1.842 -5.7,3.375l0,0.55l24,0l0,-0.25c-1.667,-1.5 -3.542,-2.667 -5.625,-3.5c-2.083,-0.833 -4.208,-1.25 -6.375,-1.25Zm-15,3c1.933,-1.9 4.192,-3.375 6.775,-4.425c2.583,-1.05 5.325,-1.575 8.225,-1.575c2.9,0 5.633,0.525 8.2,1.575c2.567,1.05 4.833,2.525 6.8,4.425l0,-29l-30,0l0,29Zm15,-10.7c-1.9,0 -3.508,-0.658 -4.825,-1.975c-1.317,-1.317 -1.975,-2.925 -1.975,-4.825c0,-1.9 0.658,-3.508 1.975,-4.825c1.317,-1.317 2.925,-1.975 4.825,-1.975c1.9,0 3.508,0.658 4.825,1.975c1.317,1.317 1.975,2.925 1.975,4.825c0,1.9 -0.658,3.508 -1.975,4.825c-1.317,1.317 -2.925,1.975 -4.825,1.975Zm0,-3c1.067,0 1.967,-0.367 2.7,-1.1c0.733,-0.733 1.1,-1.633 1.1,-2.7c0,-1.067 -0.367,-1.967 -1.1,-2.7c-0.733,-0.733 -1.633,-1.1 -2.7,-1.1c-1.067,0 -1.967,0.367 -2.7,1.1c-0.733,0.733 -1.1,1.633 -1.1,2.7c0,1.067 0.367,1.967 1.1,2.7c0.733,0.733 1.633,1.1 2.7,1.1Zm-15,18.7c-0.8,0 -1.5,-0.3 -2.1,-0.9c-0.6,-0.6 -0.9,-1.3 -0.9,-2.1l0,-31c0,-0.8 0.3,-1.5 0.9,-2.1c0.6,-0.6 1.3,-0.9 2.1,-0.9l3.25,0l0,-3l3.25,0l0,3l17,0l0,-3l3.25,0l0,3l3.25,0c0.8,0 1.5,0.3 2.1,0.9c0.6,0.6 0.9,1.3 0.9,2.1l0,31c0,0.8 -0.3,1.5 -0.9,2.1c-0.6,0.6 -1.3,0.9 -2.1,0.9l-30,0Zm3,-3l24,0l-24,0Z" style="fill-rule:nonzero;"/>
+            </g>
+        </g>
+    </g>
+</svg>
+
   </div>`;
   
-  for (let i = 0; i < addTaskContacts.length; i++) {
-    const contact = addTaskContacts[i];
+  for (let j = 0; j < addTaskContacts.length; j++) {
+    const contact = addTaskContacts[j];
     content.innerHTML +=/*html*/`
-        <div class="option">
-      <div class="selection-point-container" onclick="renderSelectContact(${i}, ${n})" >
+        <div class="option assigned-to-choose" onclick=" toggleCheckbox('${contact['name'] + n}', ${n}, ${j});">
+      <div class="selection-point-container" onclick="renderSelectContact(${j}, ${n})" >
         <div>${contact['name']}</div>
       </div>
       <div>
-        <input id='${contact['name'] + n}' type="checkbox" name="option[]" value="Option ${i}"    onclick="getSelectedOptionsContacts(${n},'${contact['name']}')">
+        <input id='${contact['name'] + n}' type="checkbox" name="option[${n}]" value="Option ${j}" onclick="toggleCheckbox('${contact['name'] + n}', ${n}, ${j})">
       </div>    
     </div>`;
+  }
+}
+
+
+
+function addAssignedToPostionInTasksArray() {
+  tasks.assignedTo.push()
+}
+function toggleCheckbox(id, n, i) {
+  var checkbox = document.getElementById(`${id}`);
+  if (checkbox.checked == true) {
+    getSelectedOptionsContacts(n);
+  } 
+  if (checkbox.checked == false) {
+      checkbox.checked = true;
+      getSelectedOptionsContacts(n);
+  }else {
+    checkbox.checked = false;
+    getSelectedOptionsContacts(n);
   }
 }
 
@@ -466,8 +553,10 @@ function loadContactsInAddTaskContacts() {
     let contact = contacts[i];
     addTaskContacts.push(contact)
   }
-  // loadNewContactsInAddTaskContacts()
+  
 }
+
+
 
 /*set array (add Task Contacts) to empty*/
 function deleteAddTaskContacts() {  
@@ -475,30 +564,21 @@ function deleteAddTaskContacts() {
 }
  
 function loadNewContactsInAddTaskContacts() {
-  for (let i = 0; i < addTaskNewContacts.length; i++) {
-    // const element = addTaskNewContacts[i]  
+  for (let i = 0; i < addTaskNewContacts.length; i++) { 
   let newContactArray = {
-    'name': addTaskNewContacts[i].split('@')[0],
-    'phone': '',
-    'email': addTaskNewContacts[i],
-    'userInitials': addTaskNewContacts[i][0]
-  }
-    addTaskContacts.unshift(newContactArray)
+    name: addTaskNewContacts[i].split("@")[0],
+    phone: "",
+    email: addTaskNewContacts[i],
+    initials: addTaskNewContacts[i][0].toUpperCase()
+  };
+   contacts.push(newContactArray)
+   addTaskNewContacts.length = 0;
 } 
 }
 
 function renderSelectContact(i, n) {
   let contact = addTaskContacts[i];
-
-  // document.getElementById(`select-contacts-container${n}`).innerHTML =/*html*/`
-  // <div onclick="openSelectContactsToAssign(${n}); checkMandatoryFieldAssignedTo(${n});" class="option selectTaskAssignedTo">
-  //               <div class="selection-point-container">
-  //                 <div>${contact['name']}</div>
-  //               </div>
-  //                 <img class="arrow-icon" src="./assets/img/arrow_icon.svg" alt="">
-  //               </div>
-  // `;
-  selectContacts.push(contact);   
+  selectedContacts.push(contact);   
 }
 
 /**
@@ -516,9 +596,6 @@ function selectionDueDate(n) {
 
 function selectPrioOnOrOff(color, test, name, colorNumber, colorIcon, whiteIcon, n) {
   let divColor = test = document.getElementById(color+n);
-  // let divYellow = document.getElementById('prio-yellow');
-  // let divGreen = document.getElementById('prio-green');
-  // checkPrio(n);
   prioColor(color, n);
   
   if (divColor.classList.contains(color)) {
@@ -539,7 +616,6 @@ function selectPrio(name, colorNumber, colorIcon, whiteIcon) {
 }
 
 function deleteJasonPrio() {
-  // addTaskSelectPrios[0].splice(1,1);
   for (let i = addTaskSelectPrios.length - 1; i >= 0; i--) {
     addTaskSelectPrios.splice(i, 1);
   }
@@ -569,9 +645,9 @@ function addSubtask(n) {
 
   let newSubtask = document.getElementById(`new-subtask-piont${n}`);
   let TaskJasonArray = {
-    'subtaskTitle': newSubtask.value, 
-    'subtaskDone': false
-  }
+    subtaskTitle: newSubtask.value,
+    subtaskDone: { value: false }
+  };
   addTaskNewSubtasks.push(TaskJasonArray);
   newSubtask.value = '';
   console.log(addTaskNewSubtasks)
@@ -591,12 +667,22 @@ function renderSubtaskPoint(n) {
   }
 }
 
+function idCount() {
+  idCounter = 0;
+
+  for (let i = 0; i < tasks.length; i++) {
+    tasks[i].id = i; // Füge dem Objekt eine ID hinzu
+    idCounter++; // Zähler inkrementieren
+  }
+}
+
 /**
  * Add Task Jason Array
  */
 
 async function addTaskJasonArray() {
   let TaskJasonArray = {
+    'id': idCounter,
     'taskTitle': title,
     'taskDescription': description,
     'taskCategory': category[0],
@@ -604,7 +690,7 @@ async function addTaskJasonArray() {
     'dueDate': dueDate,
     'prio': addTaskSelectPrios[0],
     'subtasks': addTaskNewSubtasks,
-    'taskProgress': 'toDo',
+    'taskProgress': 'boardContentToDo'
   }
   tasks.push(TaskJasonArray);
   await setServer();
@@ -626,13 +712,15 @@ async function addTaskJasonArray() {
 }
 
 function checkMandatoryFieldCategory(n) {  
-  if (document.querySelector(`.option.selectTask${n}`) !== null) {
-    document.getElementById(`required-category${n}`).classList.remove('hidden');
-    document.getElementById(`select-container${n}`).style.border = '2px solid red';
+  if (document.querySelector(`.option.selectTask${n}`) !== null ||document.querySelector(`.option.choose`)) {
+    document.getElementById(`required-category${n}`).classList.remove("hidden");
+    document.getElementById(`select-container${n}`).style.border =
+      "2px solid red";
   } else {
-    document.getElementById(`required-category${n}`).classList.add('hidden');
-    document.getElementById(`select-container${n}`).style = '';
-  }    
+    document.getElementById(`required-category${n}`).classList.add("hidden");
+    document.getElementById(`select-container${n}`).style = "";
+  } 
+
 }
 
 function checkMandatoryFieldTitle(n) {
@@ -660,13 +748,11 @@ function checkMandatoryFieldDescription(n) {
 
 function checkMandatoryFieldAssignedTo(n) {
   let contactClassList = document.getElementById(`contacts${n}`);
-  // let divFeldAssignedTo = document.getElementById(`Select contacts to assign${n}`);
-  // document.querySelector('.option.selectTaskAssignedTo') !== null
   if (selectedContacts.length === 0 && !contactClassList.classList.contains('display-flex')) {
-    document.getElementById(`required-assigned-to${n}`).classList.remove('hidden');
+    document.getElementById(`required-assigned-to${n}`).classList.remove('d-none');
     document.getElementById(`select-contacts-container${n}`).style.border = '2px solid red';
   } else {
-    document.getElementById(`required-assigned-to${n}`).classList.add('hidden');
+    document.getElementById(`required-assigned-to${n}`).classList.add('d-none');
     document.getElementById(`select-contacts-container${n}`).style = '';
   }
 }
@@ -749,7 +835,7 @@ function deleteRedBorderAndRequiredText(n) {
   document.getElementById(`required-category${n}`).classList.add('hidden');
   document.getElementById(`select-container${n}`).style = '';
   /*clear assigned-to inpupt*/
-  document.getElementById(`required-assigned-to${n}`).classList.add('hidden');
+  document.getElementById(`required-assigned-to${n}`).classList.add('d-none');
   document.getElementById(`select-contacts-container${n}`).style = '';
   /*clear due-date inpupt*/
   document.getElementById(`required-due-date${n}`).classList.add('hidden');
@@ -760,3 +846,12 @@ function deleteRedBorderAndRequiredText(n) {
   document.getElementById(`prio-green${n}`).style = '';
   document.getElementById(`required-prio${n}`).classList.add('hidden');
 }
+
+
+// function addTaskNewContact(n) {
+//   let name = document.getElementById("");
+//   let email = document.getElementById(`invite-new-contact${n}`);
+//   let phone = document.getElementById("");
+//   let initials = getInitials(`invite-new-contact${n}`);
+//   isEmailAvailable(email.value, name.value, phone.value, initials);
+// }

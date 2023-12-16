@@ -1,0 +1,179 @@
+<div class="activeTaskOverlay" style="gap: 0;">
+  <!--X schließen  -->
+  <img
+    onclick="closeActiveTaskOverlay()"
+    class="activeTaskCloseButton"
+    src="./assets/img/black-x.svg"
+    alt=""
+  />
+  <div class="title-container edit-field-width">
+    <!-- Titel Input field -->
+    <p>
+      <label class="title">Title</label>
+    </p>
+
+    <input
+      id="task-title-input2"
+      class="title-input no-outline"
+      type="text"
+      placeholder="Enter a title"
+      title="Geben Sie hier Ihren Text ein"
+      autocomplete="off"
+      required=""
+      oninput="checkMandatoryFieldTitle(2)"
+    />
+    <p id="required-title2" class="required hidden">This field is required</p>
+  </div>
+
+  <!-- Discription field -->
+  <div class="title-container edit-field-width">
+    <p>
+      <label class="title">Description</label>
+    </p>
+
+    <textarea
+      id="add-task-description2"
+      class="description-field no-outline edit-field-width"
+      type="text"
+      placeholder="Enter a title"
+      title="Geben Sie hier Ihren Text ein"
+      required=""
+      oninput="checkMandatoryFieldDescription(2)"
+    ></textarea>
+    <p id="required-description2" class="required hidden">
+      This field is required
+    </p>
+  </div>
+
+  <!-- Due date field -->
+  <div class="title-container edit-field-width">
+    <p>
+      <label class="title">Due date</label>
+    </p>
+
+    <div id="date-button2">
+      <input
+        class="title-input no-outline curser-pointer"
+        type="date"
+        id="due-date2"
+        required=""
+        oninput="checkMandatoryFieldDueDate(3)"
+        
+      />
+    </div>
+    <p id="required-due-date2" class="required hidden">
+      This field is required
+    </p>
+  </div>
+  <!-- Prio field -->
+  <div class="prio-container">
+    <p>
+      <label class="title">Prio</label>
+    </p>
+
+    <div class="prio-body-container">
+      <div
+        id="prio-red2"
+        class="prio-button"
+        onclick="selectPrioOnOrOff('prio-red','divRed', 'Urgent', '#ff3c00', './assets/img/prio-urgent-icon.svg', './assets/img/prio-urgent-white-icon.svg', 2)"
+      >
+        <div>Urgent</div>
+        <img
+          id="prio-urgent-icon2"
+          class="prio-icon"
+          src="./assets/img/prio-urgent-icon.svg"
+          alt=""
+        />
+        <img
+          id="prio-urgent-white-icon2"
+          class="prio-icon d-none"
+          src="./assets/img/prio-urgent-white-icon.svg"
+          alt=""
+        />
+      </div>
+      <div
+        id="prio-yellow2"
+        class="prio-button"
+        onclick="selectPrioOnOrOff('prio-yellow', 'divYellow', 'Medium', '#ffa800', './assets/img/prio-medium-icon.svg', './assets/img/prio-medium-white-icon.svg', 2)"
+      >
+        <div>Medium</div>
+        <img
+          id="prio-medium-icon2"
+          class="prio-icon"
+          src="./assets/img/prio-medium-icon.svg"
+          alt=""
+        />
+        <img
+          id="prio-medium-white-icon2"
+          class="prio-icon d-none"
+          src="./assets/img/prio-medium-white-icon.svg"
+          alt=""
+        />
+      </div>
+      <div
+        id="prio-green2"
+        class="prio-button"
+        onclick="selectPrioOnOrOff('prio-green', 'divGreen', 'Low', '#7ae229', './assets/img/prio-low-icon.svg', './assets/img/prio-low-white-icon.svg', 2)"
+      >
+        <div>Low</div>
+        <img
+          id="prio-low-icon2"
+          class="prio-icon"
+          src="./assets/img/prio-low-icon.svg"
+          alt=""
+        />
+        <img
+          id="prio-low-white-icon2"
+          class="prio-icon d-none"
+          src="./assets/img/prio-low-white-icon.svg"
+          alt=""
+        />
+      </div>
+    </div>
+    <p id="required-prio2" class="required hidden">This field is required</p>
+  </div>
+  <!-- Assigned to field -->
+  <div class="title-container edit-field-width">
+              <p>
+                <label class="title">Assigned to</label>
+              </p>
+
+              <div>
+                <div id="assigned-to-container2" class="new-category-container d-none">
+                  <input id="invite-new-contact2" class="no-outline" type="email" placeholder="Contact email" aria-required="true" required="">
+
+                  <div class="img-container curser-pointer">
+                    <img onclick="closeSelectContactsToAssign(2)" src="./assets/img/black-x.svg" alt="">
+                    <div class="dash-contaier curser-pointer"><span class="dash"></span></div>
+                    <img src="./assets/img/black-check.svg" alt="" onclick="checkNewContactField(2)">
+                  </div>
+                </div>
+              </div>
+              <div id="select-contacts-container2" class="select-container edit-field-width" >
+                <div onclick="openAndCloseContacts(2); checkMandatoryFieldAssignedTo(2); loadTaskAssinedTo(2);" class="option selectTaskAssignedTo">
+                  <div id="select-start-task-contact">
+                    Select contacts to assign
+                  </div>
+                  <img id="arrow-rotate" class="arrow-icon" src="./assets/img/arrow_icon.svg" alt="">
+                </div>
+                <div id="contacts2" class=" d-none board-contact-container">
+                  <div id="invite-new-contact-container${n}" onclick="inviteNewContact()" class="option ">
+                    <div>Invite new contact</div>
+                    <img class="contact-icon" src="./assets/img/contact_icon.svg" alt="">
+                  </div>
+                </div>
+              </div>
+              <p id="required-assigned-to2" class="required d-none">
+                This field is required
+              </p>
+              <p id="required-assigned-to-contact-email2" class="required d-none">
+                This field is required. Insert a valid email
+              </p>
+              <div id="edit-Button-ok-container">
+                <div class="edit-Button-ok-container" onclick="clickOnOKButton()">
+                  <button class="edit-Button-ok">ok</button>
+                </div>
+              </div>
+              
+            </div>
+</div>

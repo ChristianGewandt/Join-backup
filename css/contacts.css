@@ -695,6 +695,33 @@ white-space: nowrap;
     color: #FFFFFF;
 }
 
+.editContactOverlayDelteButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 10px;
+    gap: 10px;
+    background-color: #ffffff00;
+    width: 143px;
+    height: 61px;
+    border-radius: 10px;
+}
+
+.editContactOverlayDelteButton span {
+    width: 123px;
+    height: 25px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 120%;
+    text-align: center;
+    color: var(--defaultDark);
+}
+
+
+
 input.loginInput[type=number]::-webkit-inner-spin-button,
 input.loginInput[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;

@@ -6,6 +6,8 @@
 
 .body {
     font-family: 'Inter';
+    height: 100vh;
+    width: 100vw;
 }
 
 .d-none {
@@ -76,7 +78,7 @@ indexWrapper {
 .indexContainer {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
     flex-grow: 1;
 
 }
@@ -513,7 +515,7 @@ indexWrapper {
     position: absolute;
     width: 50px;
     height: 50px;
-    left: 0px;
+    left: 50px;
     top: 0px;
     background: #FFFFFF;
     border: 1px solid #2A3647;
@@ -676,4 +678,8 @@ font-weight: 400;
 font-size: 23px;
 line-height: 120%;
 color: #FFFFFF;
+}
+
+.curser-pointer {
+    cursor: pointer;
 }

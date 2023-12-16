@@ -4,16 +4,22 @@ function renderContacts() {
   showList()
 }
 
-
 function getFirstLetter() {
+  
   contacts.forEach(function (contact) {
-    const initial = contact.name.charAt(0);
-    if (!initials.includes(initial)) {
-      initials.push(initial);
-    }
-  });
-  initials.sort();
-}
+      let initial = contact.name.charAt(0).toUpperCase();
+
+  if (initials == 0) {
+    initials.push(initial);
+  }
+
+  if (!initials.includes(initial)) {
+        initials.push(initial);
+      }
+    });
+    initials.sort();
+  }
+
 
 function showList() {
   let contactList = document.getElementById('contactsList')
@@ -34,50 +40,108 @@ function showList() {
 }
 
 
+function renderDeleteLetter(number) {
+  deleteLetter(number);
+  showList();
+}
+
+
+function deleteLetter(number) {
+let contactList = document.getElementById("contactsList");  
+let contactCard = document.querySelector(".contactsCard");
+if (contacts == 0) {
+  initials.length = 0;
+  contactList.innerHTML = "";
+  contactCard.classList.remove("contactsCardActive");
+} else {
+  contacts.forEach(function (contact) {
+    const initial = contact.name.charAt(0).toUpperCase();
+    if (!initial.includes(initials)) {
+      initials.splice(initial);
+    }
+    initials.sort();
+  });
+
+}
+}
+
+
 function showContacts(initial) {
   let contactList = document.getElementById('contactsList')
   for (let j = 0; j < contacts.length; j++) {
     const contact = contacts[j];
     const backgroundColor = j
-    if (contact.name.charAt(0) == initial) {
+    if (contact.name.charAt(0).toUpperCase() == initial) {
       contactList.innerHTML += `
-          <div class="contactListElement" id='contact${j}' onclick="setActiveContact(${j})">
+          <div class="contactListElement" id='contact${j}' onclick="setActiveContact(${j}), setDeleteButton(${j})">
           <div class="contantsAvatar" style="background-color: ${avatarBackgroundColors[backgroundColor]}"><span>${contact.initials}</span></div>
           <div class="contactsInfo"><span>${contact.name}</span><span>${contact.email}</span></div>
-      </div>`
+      </div>`;
     }
   }
 }
 
+function setDeleteButton(number) {
+  document.getElementById("addContactButtons",).innerHTML = `<button type="button" class="editContactOverlayDelteButton" onclick="deleteContact(${number})"><span>Delete</span></button>
+                                                                             <button type="submit" class="editContactOverlaySaveButton"><span>Save</span></button>`;
+}
+
+async function deleteContact(number) {
+  contacts.splice(number, 1 );
+  addTaskContacts.splice(number, 1);
+  closeEditCardOverlay();
+  renderDeleteLetter(number);
+  renderContacts();
+  setInnerContactCard();
+  await setServer();
+}
 
 function openNewContactOverlay() {
-  document.getElementById('addContactOverlay').classList.remove('d-none')
+  document.getElementById('addContactCard').classList.remove('d-none')
   document.getElementById('container-opened-task').classList.remove('d-none')
-  document.getElementById('addContactOverlay').classList.remove('fade-out-right');
-  document.getElementById('addContactOverlay').classList.add('fade-in-left');
+  document.getElementById("addContactCard").classList.remove("fade-out-right");
+  document.getElementById("addContactCard").classList.add("fade-in-left");
   document.getElementById('container-opened-task').classList.remove('fade-out-right');
   document.getElementById('container-opened-task').classList.add('fade-in-left');
 }
 
+// function openNewContactOverlay() {
+//   document.getElementById('addContactOverlay').classList.remove('d-none')
+//   document.getElementById('container-opened-task').classList.remove('d-none')
+//   document.getElementById('addContactOverlay').classList.remove('fade-out-right');
+//   document.getElementById('addContactOverlay').classList.add('fade-in-left');
+//   document.getElementById('container-opened-task').classList.remove('fade-out-right');
+//   document.getElementById('container-opened-task').classList.add('fade-in-left');
+// }
 
-function closeNewContactOverlay(){
-  document.getElementById('addContactOverlay').classList.add('d-none')
-  document.getElementById('container-opened-task').classList.add('d-none')
-}
+// function closeNewContactOverlay(){
+//   document.getElementById('addContactOverlay').classList.add('d-none')
+//   document.getElementById('container-opened-task').classList.add('d-none')
+// }
 
 
-function openEditContactOverlay(j) {
-  contactToEdit = j
-  setEditContactOverlay(j)
-  document.getElementById('editContactOverlay').classList.remove('d-none')
-  document.getElementById('container-opened-task').classList.remove('d-none')
-}
+// function openEditContactOverlay(j) {
+//   contactToEdit = j
+//   setEditContactOverlay(j)
+//   document.getElementById("editContactOverlay").classList.remove("fade-out-right");
+//   document.getElementById("editContactOverlay").classList.add("fade-in-left");
+//   document.getElementById("editContactOverlay").classList.remove("d-none");
+// }
+ 
 
+// function closeEditContactOverlay(){
+//   console.log("closeEditContactOverlay called");
+//   // document.getElementById('container-opened-task').classList.add('d-none')
+//   document
+//     .getElementById("editContactOverlay")
+//     .classList.remove("fade-in-left");
 
-function closeEditContactOverlay(){
-  document.getElementById('editContactOverlay').classList.add('d-none')
-  document.getElementById('container-opened-task').classList.add('d-none')
-}
+//   document.getElementById("editContactOverlay").classList.add("fade-out-right");
+//   setTimeout(function () {
+//     document.getElementById("editContactOverlay").classList.add("d-none");
+//   }, 1000);
+  
+// }
 
 function setEditContactOverlay(j) {
   let contact = contacts[j]
@@ -117,9 +181,16 @@ function setActiveContact(j) {
 
 function setInnerContactCard(j) {
 
-  let contactCard = document.querySelector('.contactsCard')
-  contactCard.innerHTML = ''
-  contactCard.innerHTML += setInnerContactCardTemplate(j)
+  if (j >= 0) {
+    let contactCard = document.querySelector(".contactsCard");
+    contactCard.innerHTML = "";
+    contactCard.innerHTML += setInnerContactCardTemplate(j);
+  } else {
+    let contactCard = document.querySelector(".contactsCard");
+    contactCard.innerHTML = "";
+  }
+
+  
 
 }
 
@@ -137,7 +208,7 @@ function setInnerContactCardTemplate(j) {
 </div>
 <div class="contactCardInfoHeader">
   <span>Contact Information</span>
-  <div onclick="openEditContactOverlay(${j})" class="contactCardEdit">
+  <div onclick="openEditContactOverlay(${j}, 'editContactOverlay')" class="contactCardEdit">
       <img src="./assets/img/editIcon.svg" alt="">
       <span>Edit Contact</span>
   </div>
@@ -151,21 +222,52 @@ function setInnerContactCardTemplate(j) {
       <span>Phone</span>
       <a href="tel:${contact.phone}">${contact.phone}</a>
   </div>
-</div>`
+</div>`;
 }
 
 
-async function addContact() {
+ function addContact() {
   let name = document.getElementById('addContactName')
   let email = document.getElementById('addContactEmail');
   let phone = document.getElementById('addContactPhone')
   let initials = getInitials('addContactName');
-  contacts.push({ name: name.value, email: email.value, phone: phone.value, initials: initials });
-  await setServer();
+  isEmailAvailable(email.value, name.value, phone.value, initials);
+  
+}
+
+function deleteAddContact() {
+  document.getElementById("addContactName").value = "";
+  document.getElementById("addContactEmail").value = "";
+  document.getElementById("addContactPhone").value = "";
+  closeEditCardOverlay();
+
+}
+
+
+async function isEmailAvailable(email, name, phone, initials) {
+
+  let emailToCheck = email;
+
+  let isEmailExists = contacts.some((contact) => contact.email.toLowerCase() === emailToCheck.toLowerCase());
+
+  if (!isEmailExists) {
+    // contacts.length = 0;
+    // await setServer();
+    contacts.push({name: name,email: email,phone: phone,initials: initials,});
+    await setServer();
   document.getElementById('contactOverlay').reset()
-  closeNewContactOverlay()
+  document.getElementById("addContactEmailIsAvailable").classList.add("d-none");
+  // closeNewContactOverlay()
+  // closeEditCard("editContactOverlay");
   renderContacts()
   setActiveContact(contacts.length-1);
+  closeEditCardOverlay();
+
+  } else {
+    document.getElementById("addContactEmailError").classList.add('d-none');
+    document.getElementById("addContactEmailFormatError").classList.add("d-none");
+    document.getElementById("addContactEmailIsAvailable").classList.remove("d-none");
+  }
 }
 
 async function editContact() {
@@ -175,38 +277,47 @@ async function editContact() {
   let initials = getInitials('editContactName');
   contacts.splice(contactToEdit, 1, { name: name.value, email: email.value, phone: phone.value, initials: initials });
   await setServer();
-  closeEditContactOverlay()
+  // closeEditContactOverlay():
+  closeContactCard("editContactOverlay");
   renderContacts()
   setActiveContact(contactToEdit)
 }
 
 
 function checkInputsAddContact() {
-  document.querySelectorAll(`.resetErrorMessage`).forEach(function (el) {
-    el.classList.add('d-none');
-  })
+  document.querySelectorAll(`.addContactErrorMessage`).forEach(function (el) {
+    el.classList.add("d-none");
+  });
   let errorCount = 0;
   errorCount += checkInputEmpty('addContactName') ? 1 : 0;
   errorCount += checkInputEmpty('addContactEmail') ? 1 : 0;
   errorCount += checkEmailFormat('addContactEmail') ? 1 : 0;
   if (errorCount > 0) return;
-  document.querySelectorAll(`.resetErrorMessage`).forEach(function (el) {
-    el.classList.add('d-none');
-  })
+  document.querySelectorAll(`.addContactErrorMessage`).forEach(function (el) {
+    el.classList.add("d-none");
+  });
   addContact()
+  
 }
 
 function checkInputsEditContact(j) {
-  document.querySelectorAll(`.resetErrorMessage`).forEach(function (el) {
-    el.classList.add('d-none');
-  })
+  document.querySelectorAll(`.addContactErrorMessage`).forEach(function (el) {
+    el.classList.add("d-none");
+  });
   let errorCount = 0;
   errorCount += checkInputEmpty('editContactName') ? 1 : 0;
   errorCount += checkInputEmpty('editContactEmail') ? 1 : 0;
   errorCount += checkEmailFormat('editContactEmail') ? 1 : 0;
   if (errorCount > 0) return;
-  document.querySelectorAll(`.resetErrorMessage`).forEach(function (el) {
-    el.classList.add('d-none');
-  })
+  document.querySelectorAll(`.addContactErrorMessage`).forEach(function (el) {
+    el.classList.add("d-none");
+  });
   editContact(j)
 }
+
+
+// async function löschen() {
+//   contacts.length = 0;
+//   addTaskContacts.length = 0;
+//   await setServer();
+// }

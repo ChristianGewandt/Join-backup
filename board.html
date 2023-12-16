@@ -1,46 +1,105 @@
 <div class="board">
-    <div class="boardHeadline">
-        <h1>Board</h1>
-        <div class="boardHeadlineRight">
-            <div class="findTask">
-                <input placeholder="Find Task" type="text" name="Find Task" id="findTaskInput">
-                <img src="./assets/img/seperator.svg" alt=""><img src="./assets/img/searchIcon.svg" alt="">
-            </div>
-            <!-- popUpWindowaddTask();  -->
-            <button onclick="fadeInAddTaskContainerLeft()" 
-                class="boardAddTaskButton"><span>Add Task</span> <img src="./assets/img/plusIcon.svg" alt=""></button>
-            <!-- <button w3-include-html ="add_task_html";
+  <div class="boardHeadline">
+    <h1>Board</h1>
+    <div class="boardHeadlineRight">
+      <div class="findTask">
+        <input 
+          placeholder="Find Task"
+          type="text"
+          name="Find Task"
+          id="findTaskInput"
+          oninput="filterTasks()"
+        />
+        <img src="./assets/img/seperator.svg" alt="" />
+        <img src="./assets/img/searchIcon.svg" alt=""/>
+      </div>
+      <!-- popUpWindowaddTask();  -->
+      <button onclick="openAddTaskWindow()" class="boardAddTaskButton">
+        <span>Add Task</span> <img src="./assets/img/plusIcon.svg" alt="" />
+      </button>
+      <!-- <button w3-include-html ="add_task_html";
                 class="boardAddTaskButton"><span>Add Task</span> <img src="./assets/img/plusIcon.svg" alt=""></button>     -->
-        </div>
     </div>
-    <div class="boardContent">
-        <div class="boardElement">
-            <div class="boardElementHeader">
-                <span>To do</span>
-                <img src="./assets/img/boardPlusIcon.svg" alt="" onmouseover="hover(this,'./assets/img/boardPlusIconHover.svg');" onmouseout="unhover(this, './assets/img/boardPlusIcon.svg')" onclick="popUpWindowaddTask()">
-            </div>
-            <div id="boardContentToDo"class="boardElementContent"></div>
-        </div>
-        <div class="boardElement">
-            <div class="boardElementHeader">
-                <span>In progress</span>
-                <img src="./assets/img/boardPlusIcon.svg" alt="" onmouseover="hover(this,'./assets/img/boardPlusIconHover.svg');" onmouseout="unhover(this, './assets/img/boardPlusIcon.svg')" onclick="popUpWindowaddTask()">
-            </div>
-            <div id="boardContentInProgress" class="boardElementContent"></div>
-        </div>
-        <div class="boardElement">
-            <div class="boardElementHeader">
-                <span>Awaiting Feedback</span>
-                <img src="./assets/img/boardPlusIcon.svg" alt="" onmouseover="hover(this,'./assets/img/boardPlusIconHover.svg');" onmouseout="unhover(this, './assets/img/boardPlusIcon.svg')" onclick="popUpWindowaddTask()">
-            </div>
-            <div id="boardContentAwaiting" class="boardElementContent"></div>
-        </div>
-        <div class="boardElement">
-            <div class="boardElementHeader">
-                <span>Done</span>
-                <img src="./assets/img/boardPlusIcon.svg" alt="" onmouseover="hover(this,'./assets/img/boardPlusIconHover.svg');" onmouseout="unhover(this, './assets/img/boardPlusIcon.svg')" onclick="popUpWindowaddTask()">
-            </div>
-            <div id="boardContentDone" class="boardElementContent"></div>
-        </div>
+  </div>
+  <div class="boardContent">
+    <div class="boardElement">
+      <div class="boardElementHeader">
+        <span>To do</span>
+        <img
+          src="./assets/img/boardPlusIcon.svg"
+          alt=""
+          onmouseover="hover(this,'./assets/img/boardPlusIconHover.svg');"
+          onmouseout="unhover(this, './assets/img/boardPlusIcon.svg')"
+          onclick="openAddTaskWindow()"
+        />
+      </div>
+      <div
+        id="boardContentToDo"
+        class="boardElementContent task-area"
+        ondrop="moveTo('boardContentToDo')"
+        ondragover="allowDrop(event)"
+      ></div>
     </div>
+    <div class="boardElement">
+      <div class="boardElementHeader">
+        <span>In progress</span>
+        <img
+          src="./assets/img/boardPlusIcon.svg"
+          alt=""
+          onmouseover="hover(this,'./assets/img/boardPlusIconHover.svg');"
+          onmouseout="unhover(this, './assets/img/boardPlusIcon.svg')"
+          onclick="openAddTaskWindow()"
+        />
+      </div>
+      <div
+        id="boardContentInProgress"
+        class="boardElementContent task-area"
+        ondrop="moveTo('boardContentInProgress')"
+        ondragover="allowDrop(event)"
+      ></div>
+    </div>
+    <div class="boardElement">
+      <div class="boardElementHeader">
+        <span>Awaiting Feedback</span>
+        <img
+          src="./assets/img/boardPlusIcon.svg"
+          alt=""
+          onmouseover="hover(this,'./assets/img/boardPlusIconHover.svg');"
+          onmouseout="unhover(this, './assets/img/boardPlusIcon.svg')"
+          onclick="openAddTaskWindow()"
+        />
+      </div>
+      <div
+        id="boardContentAwaiting"
+        class="boardElementContent task-area"
+        ondrop="moveTo('boardContentAwaiting')"
+        ondragover="allowDrop(event)"
+      ></div>
+    </div>
+    <div class="boardElement">
+      <div class="boardElementHeader">
+        <span>Done</span>
+        <img
+          src="./assets/img/boardPlusIcon.svg"
+          alt=""
+          onmouseover="hover(this,'./assets/img/boardPlusIconHover.svg');"
+          onmouseout="unhover(this, './assets/img/boardPlusIcon.svg')"
+          onclick="openAddTaskWindow()"
+        />
+      </div>
+      <div
+        id="boardContentDone"
+        class="boardElementContent task-area"
+        ondrop="moveTo('boardContentDone')"
+        ondragover="allowDrop(event)"
+      ></div>
+    </div>
+  </div>
 </div>
+
+<!-- <button id="fly-in-button" class="d-none">Klick mich</button> -->
+
+<!-- <div id="fly-in-button1" class="fly-in task-added-to-board-container d-none">
+  <div class="task-added-to-board">Task added to board</div>
+  <img src="./assets/img/boardIcon.svg" alt="">
+</div> -->

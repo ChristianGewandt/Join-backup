@@ -1,8 +1,9 @@
-<div id="content-add-tast-container" class="content-add-tast-container">
+
+  <div id="content-add-tast-container" class="content-add-tast-container ">
   <div class="content-add-tast-body-container">
-    <div class="content-head-container">
       <div class="add-tast-container">
-        <div class="hader-add-task-container">
+        <div class="header-add-task-container">
+          <img class="container-x" onclick="closeAddTaskWindow()" src="./assets/img/add-task-x.svg" alt="">
           <h1>Add Task</h1>
         </div>
       </div>
@@ -58,14 +59,6 @@
                   class="new-category-container d-none"
                 >
                   <div class="input-and-color-button-container">
-                    <!-- <input
-                      id="category1"
-                      class="new-category-input no-outline"
-                      type="text"
-                      name="category"
-                      placeholder="New category name"
-                      required
-                    /> -->
                     <input
                       id="category1"
                       class="new-category-input no-outline"
@@ -198,8 +191,11 @@
                   </div>
                 </div>
               </div>
-              <p id="required-assigned-to1" class="required hidden">
-                This field is required
+              <p id="required-assigned-to1" class="required d-none">
+                This field is required. 
+              </p>
+              <p id="required-assigned-to-contact-email1" class="required d-none">
+                This field is required. Insert a valid email
               </p>
             </div>
           </div>
@@ -350,15 +346,18 @@
           </div>
         </div>
       </form>
-    </div>
   </div>
-
-</div>
-
 <div class="task-added-to-board-button-container">
   <div id="fly-in-button1" class="fly-in task-added-to-board-container d-none">
     <div class="task-added-to-board">Task added to board</div>
     <img src="./assets/img/boardIcon.svg" alt="">
   </div>
 </div>
+</div>
+
+
+
+
+
+
 

@@ -6,13 +6,15 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Join</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <script src="./js/mini_backend.js"></script>
     <script src='./js/main.js'></script>
     <script src='./js/include.js'></script>
     <script src='./js/board.js'></script>
     <script src="./js/summary.js"></script>
     <script src="./js/contacts.js"></script>
     <script src="./js/add_task.js"></script>
+    <script src="./js/darg_and_drop.js"></script>
+    <script src="./js/fadeIn_fadeOut.js"></script>
+    <script src="./js/filter.js"></script>
 
     <link rel="preload" href="./fonts/inter-v12-latin-100.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="./fonts/inter-v12-latin-200.woff2" as="font" type="font/woff2" crossorigin>
@@ -23,6 +25,7 @@
     <link rel="preload" href="./fonts/inter-v12-latin-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="./fonts/inter-v12-latin-800.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="./css/fadeIn_fadeOut.css">
     <link rel="stylesheet" href="./css/summary.css">
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/main.css">
@@ -30,10 +33,16 @@
     <link rel="stylesheet" href="./css/add_task.css">
     <link rel="stylesheet" href="./css/contacts.css">
     <link rel="stylesheet" href="./css/desktop_template.css">
+    <link rel="stylesheet" href="./css/desktopTemplate.css">
     <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/editContactCard.css">
+    <link rel="stylesheet" href="./css/legal-notice.css">
+    <link rel="stylesheet" href="./css/help.css">
+    <link rel="stylesheet" href="./css/mobile_template.css">
 </head>
-
-<body onload="init('include')">
+<!-- onload="init('include')"> -->
+<!-- onload="init()" -->
+<body onload="init()">
     <indexWrapper>
         <div w3-include-html="./assets/templates/desktop_template.html"></div>
 
@@ -43,16 +52,24 @@
             <div id='boardContent' class="indexContent d-none" w3-include-html="board.html"></div>
             <div id='addTaskContent' class="indexContent d-none" w3-include-html="add_task.html"></div>
             <div id='contactsContent' class="indexContent d-none" w3-include-html="contacts.html"></div>
+            <div id='privacyPolicyContent' class="indexContent d-none" w3-include-html="PrivacyPolicy.html"></div>
+            <div id='legalNoticeContent' class="indexContent d-none" w3-include-html="legalNotice.html"></div>
+            <div class="indexContent d-none" id="helpContent" w3-include-html="help.html"></div>
         </div>
         <!-- background container for the pop up Windows (Hintergrundcontainer für die Popup-Fenster) -->
-        <div class=" fade-in-left container-opened-task d-none " id="container-opened-task" onclick="closeOverlay()"></div>
-        <div class="add-task-window d-none" id="add-task-window" w3-include-html="./assets/templates/task_form.html"></div>
-        <div class="addContactOverlay d-none" id="addContactOverlay" w3-include-html="./assets/templates/addContactCard.html"></div>
-        <div class="editContactOverlay d-none" id="editContactOverlay" w3-include-html="./assets/templates/editContactCard.html"></div>
+        <!-- <div class="fade-in-left container-opened-task d-none " id="container-opened-task" onclick="closeOverlay()"></div> -->
+        <div class="container-opened-task d-none" id="backgroundOverlay" onclick="closeEditCardOverlay()"></div>
+        <div class="container-opened-task d-none" id="container-aktive-task" onclick="closeActiveTaskOverlay()"></div>
+        <div class="add-task-window d-none" id="add-task-window" w3-include-html="./assets/templates/addTaskOverlayTemplate.html"></div>
+        <div class="postion-edit-contact-card add-task-window d-none" id="addContactCard" w3-include-html="./assets/templates/addContactCard.html" ></div>
+        <div class="postion-edit-contact-card d-none" id="editContactOverlay" w3-include-html="./assets/templates/editContactCard.html"></div>
         <div class="activeTaskOverlay d-none" id="activeTaskOverlay" w3-include-html="./assets/templates/activeTaskOverlay.html"></div>
+        <div class="activeTaskOverlay d-none" id="activeTaskEditOverlay" w3-include-html="./assets/templates/activeTaskEditOverlay.html"></div>
     </indexWrapper>
-    
+    <script src="./js/storage.js"></script>
 </body>
 
 
 </html>
+
+

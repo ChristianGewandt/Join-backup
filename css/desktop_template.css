@@ -21,7 +21,7 @@
 
 .logoTemplate {
     width: 100.03px;
-height: 121.97px;
+    height: 121.97px;
    
 }
 
@@ -65,9 +65,8 @@ height: 121.97px;
 }
 
 .desktopTemplateIcon {
-    width: 22px;
-    height: 26px;
-   color:#CDCDCD;
+    width: 30px;
+    height: 30px;
 }
 
 .desktopTemplateFont {
@@ -82,13 +81,28 @@ height: 121.97px;
     color: #CDCDCD;
 }
 
+
+
+
+
 .desktopTemplateIconActive {
-    background-color: #091931;
+    background-color: #ffffff;
+    border-right: 5px solid #29abe2;
 }
+
+.desktopTemplateIconActive span {
+    color: #29abe2;
+    font-weight: 700;
+}
+
+
+
 
 .desktopTemplateIconActive p{
     color:white !important
 }
+
+
 
 
 
@@ -142,4 +156,39 @@ height: 121.97px;
 .delete-icon {
     width: 20px;
     height: 20px;
+}
+
+@media (max-width: 300px) {
+
+    body {
+        height: 100vh;
+    }
+    .desktopTemplate {
+        display: flex;
+        height: 80px;
+        width: 100vw;
+        justify-content: center;
+        align-items: center;
+        gap: -15px;
+        background: #1468df;
+        position: absolute;
+        bottom: 0px;
+        /* display: flex !important;
+            flex-direction: row !important;
+            height: 80px !important;
+            width: 100vw !important;
+            justify-content: space-around !important;
+            align-items: center !important; */
+            /* position: relative;
+                top: 100vh;
+                height: 80px !important;
+                width: 100vw !important; */
+            
+    }
+
+        .logoTemplate {
+            display: none;
+        }
+
+
 }

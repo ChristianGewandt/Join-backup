@@ -1,0 +1,40 @@
+.number-list {
+    display: flex;
+    gap: 35px;
+}
+
+.help-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 50px;
+    width: 50%;
+}
+
+.join-text-color {
+    color: #29ABE2;
+}
+
+.arrow-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.back-button {
+    padding: 0;
+    border: none;
+    background: none;
+    height: 37px;
+    width: 37px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background: rgba(119, 119, 119, 0.208);
+    border-radius: 100%;
+    
+    
+    
+}

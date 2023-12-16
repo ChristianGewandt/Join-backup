@@ -1,43 +1,91 @@
 <div class="desktopTemplate">
+  <img class="logoTemplate" src="./assets/img/logo_invert.svg" alt="" />
 
-    <img class="logoTemplate" src="assets/img/logo_invert.svg" alt="">
-
+  <div class="second-container-desktopTemplateMenu">
     <div class="desktopTemplateMenu">
-        <div onclick="showContent('summaryContent'); setActiveElement(this)" id="summary"
-            class="desktopTemplateMenuElements desktopTemplateIconActive">
-            <div class="desktopTemplateIconContainer">
-                <img class="desktopTemplateIcon" src="assets/img/summaryIcon.svg" alt="">
-            </div>
-            <p class="desktopTemplateFont">Summary</p>
-        </div>
-        <div onclick="showContent('boardContent'); setActiveElement(this)" id="board-button" class="desktopTemplateMenuElements">
-            <div class="desktopTemplateIconContainer">
-                <img class="desktopTemplateIcon" src="assets/img/boardIcon.svg" alt="">
-            </div>
-            <p id="board" class="desktopTemplateFont">Board</p>
-        </div>
-        <div onclick="showContent('addTaskContent'); setActiveElement(this)" id="addTask"
-            class="desktopTemplateMenuElements">
-            <div class="desktopTemplateIconContainer">
-                <img class="desktopTemplateIcon" src="assets/img/addTaskIcon.svg" alt="">
-            </div>
-            <p class="desktopTemplateFont">Add Task</p>
-        </div>
-        <div onclick="showContent('contactsContent'); setActiveElement(this)" id="contacts"
-            class="desktopTemplateMenuElements">
-            <div class="desktopTemplateIconContainer">
-                <img class="desktopTemplateIcon" src="assets/img/contactsIcon.svg" alt="">
-            </div>
-            <p class="desktopTemplateFont">Contacts</p>
-        </div>
+    <div
+      onclick="showContent('summaryContent'); setActiveElement(this, 0); clearTheInputFields(0)"
+      id="summary"
+      class="desktopTemplateMenuElements desktopTemplateIconActive"
+    >
+      <div class="desktopTemplateIconContainer">
+        <img
+          id="icon-blue0"
+          class="desktopTemplateIcon"
+          src="assets/img/IconBlue0.svg"
+          alt=""
+        />
+      </div>
+      <p class="desktopTemplateFont curser-pointer"><span>Summary</span></p>
     </div>
-    <div class="desktopTemplateMenu">
-        <div onclick="showContent('legalNotice'); setActiveElement(this)" id="legalNotice"
-            class="desktopTemplateMenuElements">
-            <div class="desktopTemplateIconContainer">
-                <img class="desktopTemplateIcon" src="assets/img/infoIcon.svg" alt="">
-            </div>
-            <p class="desktopTemplateFont">Legal Notice</p>
-        </div>
+    <div
+      onclick="showContent('boardContent'); setActiveElement(this, 1); clearTheInputFields(0); closeSelectContactsToAssign(0)"
+      id="board-button"
+      class="desktopTemplateMenuElements"
+    >
+      <div class="desktopTemplateIconContainer">
+        <img
+          id="icon-blue1"
+          class="desktopTemplateIcon"
+          src="assets/img/boardIcon.svg"
+          alt=""
+        />
+      </div>
+      <p id="board" class="desktopTemplateFont curser-pointer"><span>Board</span></p>
     </div>
+    <div
+      onclick="showContent('addTaskContent'); setActiveElement(this, 2); clearTheInputFields(0)"
+      id="addTask"
+      class="desktopTemplateMenuElements"
+    >
+      <div class="desktopTemplateIconContainer">
+        <img
+          id="icon-blue2"
+          class="desktopTemplateIcon"
+          src="assets/img/addTaskIcon.svg"
+          alt=""
+        />
+      </div>
+      <p class="desktopTemplateFont curser-pointer"><span>Add Task</span></p>
+    </div>
+    <div
+      onclick="showContent('contactsContent'); setActiveElement(this, 3); clearTheInputFields(0); renderContacts()"
+      id="contacts"
+      class="desktopTemplateMenuElements"
+    >
+      <div class="desktopTemplateIconContainer">
+        <img
+          id="icon-blue3"
+          class="desktopTemplateIcon"
+          src="assets/img/contactsIcon.svg"
+          alt=""
+        />
+      </div>
+      <p class="desktopTemplateFont curser-pointer"><span>Contacts</span></p>
+    </div>
+  </div>
+  <div class="desktopTemplateMenu">
+    <div
+      onclick="showContent('privacyPolicyContent'); setActiveElement(this, 4); clearTheInputFields(0)"
+      id="PrivacyPolicy"
+      class="desktopTemplateMenuElements"
+    >
+      <div class="desktopTemplateIconContainer">
+        <img id="icon-blue4" class="desktopTemplateIcon" src="assets/img/Privacy-Policy-icon.svg" alt="" />
+      </div>
+      <p class="desktopTemplateFont curser-pointer"><span>Privacy Policy</span></p>
+    </div>
+    <div
+      onclick="showContent('legalNoticeContent'); setActiveElement(this, 5); clearTheInputFields(0)"
+      id="legalNotice"
+      class="desktopTemplateMenuElements"
+    >
+      <div class="desktopTemplateIconContainer">
+        <img id="icon-blue5" class="desktopTemplateIcon" src="assets/img/infoIcon.svg" alt="" />
+      </div>
+      <p class="desktopTemplateFont curser-pointer"><span>Legal Notice</span></p>
+    </div>
+  </div>
+  </div>
+  
 </div>
